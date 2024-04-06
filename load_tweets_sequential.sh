@@ -8,7 +8,7 @@ echo '==========================================================================
 time for file in $files; do
     echo
     # use SQL's COPY command to load data into pg_denormalized
-    zcat $files | sed 's/\\u0000//g' | psql postgresql://postgres:pass@localhost:13649/postgres -c "COPY tweets_jsonb (data) FROM STDIN csv quote e'\x01' delimiter e'\x02';"
+    unzip -p $files | sed 's/\\u0000//g' | psql postgresql://postgres:pass@localhost:13649/postgres -c "COPY tweets_jsonb (data) FROM STDIN csv quote e'\x01' delimiter e'\x02';"
 done
 
 echo '================================================================================'
